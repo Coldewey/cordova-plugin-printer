@@ -222,15 +222,18 @@ public final class PrintManager {
      * @param printJobId The print job id.
      */
     private void notifyOnPrintJobStateChanged(PrintJobId printJobId) {
-        if (listener != null && listener.get() != null) {
-            Method method = Meta.getMethod(getInstance().getClass(),
-                    "getPrintJob", PrintJobId.class);
+        try {
+            if (listener != null && listener.get() != null) {
+                Method method = Meta.getMethod(getInstance().getClass(),
+                        "getPrintJob", PrintJobId.class);
 
-            PrintJob job  = (PrintJob) Meta.invokeMethod(getInstance(),
-                    method, printJobId);
+                PrintJob job  = (PrintJob) Meta.invokeMethod(getInstance(),
+                        method, printJobId);
 
-            listener.get().onPrintJobStateChanged(job);
+                listener.get().onPrintJobStateChanged(job);
+            }
+        } catch(Exception e) {
+            
         }
     }
-
 }
