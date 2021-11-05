@@ -227,10 +227,12 @@ public final class PrintManager {
                 Method method = Meta.getMethod(getInstance().getClass(),
                         "getPrintJob", PrintJobId.class);
 
-                PrintJob job  = (PrintJob) Meta.invokeMethod(getInstance(),
+                if (method != null) {
+                    PrintJob job  = (PrintJob) Meta.invokeMethod(getInstance(),
                         method, printJobId);
 
-                listener.get().onPrintJobStateChanged(job);
+                    listener.get().onPrintJobStateChanged(job);
+                }
             }
         } catch(Exception e) {
             
